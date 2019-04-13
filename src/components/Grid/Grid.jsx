@@ -51,7 +51,7 @@ class Grid extends Component {
   genGrid = () => {
     const squaresWide = this.props.gridWidth
     const squaresHigh = this.props.gridHeight
-    
+
     let grid = []
     for(let j = 0; j < squaresHigh; j++){
       let row = []
@@ -66,14 +66,12 @@ class Grid extends Component {
   handleMouseOver = (e, row, column) => {
     e.preventDefault()
     if(e.buttons === 1){
-      this.props.selectSpace(row, column)
       this.props.setTile(row, column)
     }
   }
 
   handleMouseDown = (e, row, column) => {
     e.preventDefault();
-    this.props.selectSpace(row, column)
     this.props.setTile(row, column)
   }
 

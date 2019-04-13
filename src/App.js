@@ -21,7 +21,6 @@ class App extends Component {
     ],
     squareSize: 50,
     currentTile: null,
-    currentSpace: null,
     action: null,
     gridWidth: 10,
     gridHeight: 10,
@@ -39,10 +38,6 @@ class App extends Component {
 
   selectTile = (e, id) => {
     this.setState({ currentTile: id, action: null })
-  }
-
-  selectSpace = (e, id) => {
-    // this.setState({ currentSpace: id })
   }
 
   clearSpace = (row, column) => {
@@ -172,7 +167,6 @@ class App extends Component {
             grid={this.state.grid} 
             updateGrid={this.genGrid} 
             setTile={this.setTile}
-            selectSpace={this.selectSpace}
             gridWidth={this.state.gridWidth}
             gridHeight={this.state.gridHeight}
             zoom={this.state.zoom}
