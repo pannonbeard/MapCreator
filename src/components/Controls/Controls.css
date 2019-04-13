@@ -1,0 +1,18 @@
+#controls{
+  display: flex;
+  height: 50px;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: space-between;
+}
+
+#controls button{
+  padding: 10px;
+  border: none;
+  background: #eee;
+}
+
+#controls button:hover, #controls button.active{
+  background: #bbb;
+  cursor: pointer;
+}

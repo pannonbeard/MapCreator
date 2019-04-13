@@ -1,0 +1,26 @@
+main{
+  overflow: scroll;
+}
+
+.tile:hover{
+  border: 2px solid green;
+}
+
+.tile img{
+  box-sizing: border-box;
+}
+
+.rotate-0{
+
+}
+.rotate-90{
+  transform: rotate(90deg)
+}
+.rotate-180{
+  transform: rotate(180deg)
+}
+.rotate-270{
+  transform: rotate(270deg)
+}
+
+
