@@ -17,7 +17,11 @@ class App extends Component {
       { id: 3, image: floorWallPng, name: 'floor with wall', rotation: 0, count: 0 }
     ],
     grid: [
-      // { id: i, tile: '', src: '' }
+      /*
+        [
+          [ {}, {}, {}, {} ]
+        ]
+      */
     ],
     squareSize: 50,
     currentTile: null,
@@ -58,7 +62,10 @@ class App extends Component {
         return {...space, tile: {...space.tile} }
       })
     })
-    const space = { ...grid[row][column], tile: { ...grid[row][column].tile} }
+    const space = { 
+      ...grid[row][column], 
+      tile: { ...grid[row][column].tile} 
+    }
     space.tile.rotation += 90
     if (space.tile.rotation > 270) {
       space.tile.rotation = 0
