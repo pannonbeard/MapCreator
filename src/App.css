@@ -138,7 +138,7 @@ img.active{
 
 .menu-closer .bar:first-child{
   transform: rotate(45deg)
-  translateY(40%)
+  translateY(30%)
   translateX(10%)
 }
 
@@ -164,6 +164,11 @@ img.active{
     z-index: 102;
   }
 
+  aside ul{
+    height: calc(100vh - 200px)
+  }
+  
+
   aside .navHeader{
     display: flex;
     justify-content: space-between;
@@ -186,6 +191,7 @@ img.active{
 
   aside.open{
     left: 0;
+    box-shadow: 0px 2px 10px black;
   }
 
   .drawer-back{
