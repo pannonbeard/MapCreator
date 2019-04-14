@@ -1,15 +1,25 @@
 #controls{
-  display: flex;
-  height: 50px;
   align-items: center;
-  padding: 0 1rem;
-  justify-content: space-between;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.45);
+  border-radius: 10px;
 }
 
 #controls button{
   padding: 10px;
   border: none;
   background: #eee;
+}
+
+#controls button:first-child{
+  border-radius: 10px 0 0 10px;
+}
+
+#controls button:last-child{
+  border-radius:  0 10px 10px 0;
 }
 
 #controls button:hover, #controls button.active{
