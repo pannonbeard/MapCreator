@@ -100,8 +100,10 @@ class Grid extends Component {
           onMouseOver={(e) => this.handleMouseOver(e, space.row, space.column)}></div>
         ))
       })
+      let currentCursor = this.props.status === 'rotate' ? 
+        'rotating' : ''
     return (
-      <main >
+      <main className={currentCursor}>
         <div id='grid' style={
           { 
             gridTemplateColumns: `repeat(${this.props.gridWidth}, ${this.props.squareSize}px)`,
