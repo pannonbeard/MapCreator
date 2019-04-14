@@ -33,6 +33,15 @@ class App extends Component {
     navOpen: false
   }
 
+  componentDidMount() {
+    const columns = document.body.clientWidth < 700 ? 
+      Math.round(document.body.clientWidth / this.state.squareSize) :
+      Math.round( (document.body.clientWidth - 200) / this.state.squareSize )
+    const rows = Math.round(document.body.clientHeight / this.state.squareSize)
+
+    this.setState({ gridWidth: columns, gridHeight: rows })
+  }
+
   toggleNav = () => {
     this.setState({ navOpen: !this.state.navOpen })
   }
@@ -47,6 +56,9 @@ class App extends Component {
 
   selectTile = (e, id) => {
     this.setState({ currentTile: id, action: null })
+    if(this.state.navOpen){
+      this.toggleNav()
+    }
   }
 
   clearSpace = (row, column) => {
