@@ -14,7 +14,7 @@ class App extends Component {
     tiles: [
       { id: 1, image: wallPng, name: 'wall', rotation: 0, count: 0 },
       { id: 2, image: woodFloorPng, name: 'wood floor', rotation: 0, count: 0 },
-      { id: 3, image: floorWallPng, name: 'floor with wall', rotation: 0, count: 0 }
+      { id: 3, image: floorWallPng, name: 'floor with wall', rotation: 0, count: 0 },
     ],
     grid: [
       /*
@@ -29,7 +29,12 @@ class App extends Component {
     gridWidth: 10,
     gridHeight: 10,
     zoom: 100,
-    background: 'grass'
+    background: 'grass',
+    navOpen: false
+  }
+
+  toggleNav = () => {
+    this.setState({ navOpen: !this.state.navOpen })
   }
 
   changeBackground = (e) => {
@@ -108,11 +113,19 @@ class App extends Component {
   }
 
   setToRotate = () =>{
-    this.setState({ action: 'rotate', currentTile: null })
+    if(this.state.action === 'rotate'){
+      this.setState({ action: null, currentTile: null })
+    }else{
+      this.setState({ action: 'rotate', currentTile: null })
+    }
   }
 
   setToClear = () => {
-    this.setState({ action: 'clear', currentTile: null })
+    if(this.state.action === 'clear'){
+      this.setState({ action: null, currentTile: null })
+    }else{
+      this.setState({ action: 'clear', currentTile: null })
+    }
   }
 
   saveMap = () => {
@@ -140,7 +153,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Controls 
+      <Controls 
           clearTile={this.setToClear} 
           rotateTile={this.setToRotate} 
           saveMap={this.saveMap}
@@ -150,25 +163,45 @@ class App extends Component {
           setHeight={this.setMapHeight}
           action={this.state.action}
           />
+        <aside className={this.state.navOpen ? 'open' : '' }>
+          <div className='navHeader'>
+            <h1>Map Builder</h1>
+            <div className='menu-closer' onClick={this.toggleNav}>
+              <div className='bar'></div>
+              <div className='bar'></div>
+            </div>
+          </div>
+          <div className='height_width'>
+            <label>H: <input type='number' value={this.state.gridHeight} onChange={ (e) => this.setMapHeight(e.target.value)} /></label>
+            <label>W: <input type='number' value={this.state.gridWidth} onChange={ (e) => this.setMapWidth(e.target.value)}/></label>
+          </div>
+          <select onChange={this.changeBackground} className='gridBackground'>
+            <option value='grass'>Grass</option>
+            <option value='water'>Water</option>
+          </select>
+          <ul>
+            {this.state.tiles.map(tile =>
+              <li key={tile.id}>
+                <img 
+                  src={tile.image} 
+                  alt={tile.name} 
+                  className={this.state.currentTile === tile.id ? 'active' : ''}
+                  onClick={(e) => this.selectTile(e, tile.id)}
+                  />
+              </li>
+            )}
+          </ul>
+        </aside>
+        { this.state.navOpen ? <div className='drawer-back' onClick={this.toggleNav}></div> : null }
         <div className="CreationArea">
-          <aside>
-            <select onChange={this.changeBackground}>
-              <option value='grass'>Grass</option>
-              <option value='water'>Water</option>
-            </select>
-            <ul>
-              {this.state.tiles.map(tile =>
-                <li key={tile.id}>
-                  <img 
-                    src={tile.image} 
-                    alt={tile.name} 
-                    className={this.state.currentTile === tile.id ? 'active' : ''}
-                    onClick={(e) => this.selectTile(e, tile.id)}
-                    />
-                </li>
-              )}
-            </ul>
-          </aside>
+          <header>
+            <div className='menu-opener' onClick={this.toggleNav}>
+              <div className='bar'></div>
+              <div className='bar'></div>
+              <div className='bar'></div>
+            </div>
+            <h1>Map Builder</h1>
+          </header>
           <Grid 
             squareSize={this.state.squareSize} 
             grid={this.state.grid} 
@@ -178,6 +211,7 @@ class App extends Component {
             gridHeight={this.state.gridHeight}
             zoom={this.state.zoom}
             background={this.state.background}
+            status={this.state.action}
             />
         </div>
       </div>

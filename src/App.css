@@ -1,19 +1,44 @@
 .App{
   width: 100%;
-  height: calc(100vh - 50px);
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 200px auto;
+}
+
+h1, h2, h3{
+  font-family: 'Roboto Slab', serif;
 }
 
 .CreationArea{
   display: grid;
-  grid-template-columns: 200px auto;
   width: 100%;
-  height: calc(100vh - 50px);
+  height: 100vh;
   grid-gap: 10px;
+}
+
+.CreationArea header{
+  position: absolute;
+  background: rgba(0,0,0,0.65);
+  box-sizing: border-box;
+  width: 100%;
+  margin-left: -200px;
+}
+
+.CreationArea header h1{
+  color: white;
+  padding: 10px;
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 aside{
   background: #eee;
   height: 100%;
+  position: relative;
+  z-index: 100;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 aside img{
@@ -25,6 +50,8 @@ aside ul{
   list-style: none;
   padding: 0;
   width: 100%;
+  overflow: auto;
+  height: calc(100vh - 150px)
 }
 
 aside ul li{
@@ -45,3 +72,135 @@ img.active{
   border: solid black 1px;
 }
 
+.height_width{
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.height_width label{
+  width: 50%;
+  display: inline-block;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.height_width input{
+  width: 60%;
+  box-sizing: border-box;
+  padding: 5px;
+  border: solid 1px #aaa;
+  border-radius: 2px;
+}
+
+.gridBackground{
+  padding: 10px;
+  width: 100%;
+}
+
+.menu-opener, .menu-closer{
+  height: 35px;
+  width: 35px;
+  box-sizing: border-box;
+  padding: 6px;
+  border: solid 2px white;
+}
+
+.menu-opener{
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  border-radius: 10px;
+  display: grid;
+  grid-gap: 5px;
+}
+
+.menu-opener .bar, .menu-closer .bar{
+  box-sizing: border-box;
+  background: white;
+}
+
+.menu-closer{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.menu-closer .bar{
+  height: 5px;
+  width: 100%;
+}
+
+.menu-closer .bar:first-child{
+  transform: rotate(45deg)
+  translateY(40%)
+  translateX(10%)
+}
+
+.menu-closer .bar:last-child{
+  transform: rotate(135deg)
+  translateY(40%)
+  translateX(-10%)
+}
+
+@media screen and (max-width: 700px){
+  .App{
+    grid-template-columns: 1fr;
+  }
+
+  .CreationArea header{
+    margin: 0
+  }
+  aside{
+    position: absolute;
+    width: 250px;
+    left: -250px;
+    transition: all 0.5s ease;
+    z-index: 102;
+  }
+
+  aside .navHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    background: rgba(0,0,0,0.55);
+    padding: 10px;
+    box-sizing: content-box;
+    width: 100%;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-bottom: 10px;
+  }
+
+  aside .navHeader h1{
+    margin: 0;
+    color: white;
+
+  }
+
+  aside.open{
+    left: 0;
+  }
+
+  .drawer-back{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 101;
+  }
+}
+
+@media screen and (min-width: 701px){
+  aside .navHeader{
+    display: none;
+  }
+}
