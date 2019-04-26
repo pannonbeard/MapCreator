@@ -8,6 +8,7 @@ import woodFloorPng from './assets/wood-floor.png'
 
 import Grid from './components/Grid/Grid'
 import Controls from './components/Controls/Controls'
+import Menu from './components/Menu/Menu'
 
 class App extends Component {
   state = {
@@ -16,21 +17,14 @@ class App extends Component {
       { id: 2, image: woodFloorPng, name: 'wood floor', rotation: 0, count: 0 },
       { id: 3, image: floorWallPng, name: 'floor with wall', rotation: 0, count: 0 },
     ],
-    grid: [
-      /*
-        [
-          [ {}, {}, {}, {} ]
-        ]
-      */
-    ],
+    grid: [],
     squareSize: 50,
     currentTile: null,
     action: null,
     gridWidth: 10,
     gridHeight: 10,
     zoom: 100,
-    background: 'grass',
-    navOpen: false
+    background: 'grass'
   }
 
   componentDidMount() {
@@ -42,10 +36,6 @@ class App extends Component {
     this.setState({ gridWidth: columns, gridHeight: rows })
   }
 
-  toggleNav = () => {
-    this.setState({ navOpen: !this.state.navOpen })
-  }
-
   changeBackground = (e) => {
     this.setState({ background: e.target.value })
   }
@@ -54,62 +44,8 @@ class App extends Component {
     this.setState({ grid })
   }
 
-  selectTile = (e, id) => {
-    this.setState({ currentTile: id, action: null })
-    if(this.state.navOpen){
-      this.toggleNav()
-    }
-  }
-
-  clearSpace = (row, column) => {
-    const grid = this.state.grid.map( row => {
-      return row.map( space => {
-        return {...space, tile: {...space.tile} }
-      })
-    })
-    const tile = grid[row][column].tile
-    this.updateTileCount(tile.id, -1)
-    grid[row][column] = { row, column, tile: null }
-    this.setState({ grid })
-  }
-
-  rotateSpace = (row, column) => {
-    const grid = this.state.grid.map( row => {
-      return row.map( space => {
-        return {...space, tile: {...space.tile} }
-      })
-    })
-    const space = { 
-      ...grid[row][column], 
-      tile: { ...grid[row][column].tile} 
-    }
-    space.tile.rotation += 90
-    if (space.tile.rotation > 270) {
-      space.tile.rotation = 0
-    }
-    grid[row][column] = space
-    this.setState({ grid })
-  }
-
-  setTile = (row, column) => {
-    if(this.state.currentTile !== null){
-      let tile = this.state.tiles.find( tile => tile.id === this.state.currentTile )
-      this.updateTileCount(tile.id, 1)
-      const grid = this.state.grid.map( row => {
-        return row.map( space => {
-          return { ...space, tile: {...space.tile} }
-        })
-      })
-      
-      grid[row][column] = { row, column, tile }
-      this.setState({ grid })
-    }else if (this.state.action === 'rotate'){
-      this.rotateSpace(row, column)
-    }else if (this.state.action === 'clear' ){
-      this.clearSpace(row, column)
-    }else{
-      console.log("nothing happened")
-    }
+  setCurrentTile = (tile) => {
+    this.setState({ currentTile: tile, action: null })
   }
 
   updateTileCount = (tileId, change) => {
@@ -175,43 +111,18 @@ class App extends Component {
           setHeight={this.setMapHeight}
           action={this.state.action}
           />
-        <aside className={this.state.navOpen ? 'open' : '' }>
-          <div className='navHeader'>
-            <h1>Map Builder</h1>
-            <div className='menu-closer' onClick={this.toggleNav}>
-              <div className='bar'></div>
-              <div className='bar'></div>
-            </div>
-          </div>
-          <div className='height_width'>
-            <label>H: <input type='number' value={this.state.gridHeight} onChange={ (e) => this.setMapHeight(e.target.value)} /></label>
-            <label>W: <input type='number' value={this.state.gridWidth} onChange={ (e) => this.setMapWidth(e.target.value)}/></label>
-          </div>
-          <select onChange={this.changeBackground} className='gridBackground'>
-            <option value='grass'>Grass</option>
-            <option value='water'>Water</option>
-          </select>
-          <ul>
-            {this.state.tiles.map(tile =>
-              <li key={tile.id}>
-                <img 
-                  src={tile.image} 
-                  alt={tile.name} 
-                  className={this.state.currentTile === tile.id ? 'active' : ''}
-                  onClick={(e) => this.selectTile(e, tile.id)}
-                  />
-              </li>
-            )}
-          </ul>
-        </aside>
-        { this.state.navOpen ? <div className='drawer-back' onClick={this.toggleNav}></div> : null }
+        <Menu 
+          gridHeight={this.state.gridWidth}
+          gridWidth={this.state.gridWidth}
+          tiles={this.state.tiles}
+          setMapHeight={this.setMapHeight}
+          setMapWidth={this.setMapWidth}
+          changeBackground={this.changeBackground}
+          currentTile={this.state.currentTile}
+          setCurrentTile={this.setCurrentTile}
+        />
         <div className="CreationArea">
           <header>
-            <div className='menu-opener' onClick={this.toggleNav}>
-              <div className='bar'></div>
-              <div className='bar'></div>
-              <div className='bar'></div>
-            </div>
             <h1>Map Builder</h1>
           </header>
           <Grid 

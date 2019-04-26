@@ -3,6 +3,11 @@ import './Grid.css'
 import Grass from '../../assets/grass.png'
 import Water from '../../assets/water.jpg'
 class Grid extends Component {
+  state = {
+    grid: [],
+    action: null
+  }
+
   componentDidMount() {
     this.genGrid()
   }
@@ -14,8 +19,60 @@ class Grid extends Component {
     }
   }
 
+  clearSpace = (row, column) => {
+    const grid = this.state.grid.map( row => {
+      return row.map( space => {
+        return {...space, tile: {...space.tile} }
+      })
+    })
+    // const tile = grid[row][column].tile
+    // this.updateTileCount(tile.id, -1)
+    grid[row][column] = { row, column, tile: null }
+    this.setState({ grid })
+  }
+
+  rotateSpace = (row, column) => {
+    const grid = this.state.grid.map( row => {
+      return row.map( space => {
+        return {...space, tile: {...space.tile} }
+      })
+    })
+    const space = { 
+      ...grid[row][column], 
+      tile: { ...grid[row][column].tile} 
+    }
+    space.tile.rotation += 90
+    if (space.tile.rotation > 270) {
+      space.tile.rotation = 0
+    }
+    grid[row][column] = space
+    this.setState({ grid })
+  }
+
+  setTile = (row, column) => {
+    if(this.props.currentTile !== null){
+      let tile = { ...this.props.currentTile}
+      // this.updateTileCount(tile.id, 1)
+      const grid = this.state.grid.map( row => {
+        return row.map( space => {
+          return { ...space, tile: {...space.tile} }
+        })
+      })
+      
+      grid[row][column] = { row, column, tile }
+      this.setState({ grid })
+    }else if (this.state.action === 'rotate'){
+      this.rotateSpace(row, column)
+    }else if (this.state.action === 'clear' ){
+      this.clearSpace(row, column)
+    }else{
+      console.log("nothing happened")
+    }
+  }
+
+
   updateGrid = () => {
-    let grid = this.props.grid.map(row => {
+    let grid = this.state.grid.map(row => {
       if(row.length > this.props.gridWidth){
         row = row.slice(0, this.props.gridWidth)
       }
@@ -45,7 +102,7 @@ class Grid extends Component {
       }
       newGrid.push(row)
     }
-    this.props.updateGrid(newGrid)
+    this.setState({ grid: newGrid } )
   }
 
   genGrid = () => {
@@ -60,19 +117,19 @@ class Grid extends Component {
       }
       grid.push(row)
     }
-    this.props.updateGrid(grid)
+    this.setState({ grid })
   }
 
   handleMouseOver = (e, row, column) => {
     e.preventDefault()
     if(e.buttons === 1){
-      this.props.setTile(row, column)
+      this.setTile(row, column)
     }
   }
 
   handleMouseDown = (e, row, column) => {
     e.preventDefault();
-    this.props.setTile(row, column)
+    this.setTile(row, column)
   }
 
   setBackground = () => {
@@ -84,7 +141,7 @@ class Grid extends Component {
   }
 
   render() {
-    const genGrid = this.props.grid.map((row) => {
+    const genGrid = this.state.grid.map((row) => {
       return row.map((space, index) => (
           <div
           key={index}
