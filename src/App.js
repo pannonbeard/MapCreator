@@ -17,10 +17,8 @@ class App extends Component {
       { id: 2, image: woodFloorPng, name: 'wood floor', rotation: 0, count: 0 },
       { id: 3, image: floorWallPng, name: 'floor with wall', rotation: 0, count: 0 },
     ],
-    grid: [],
     squareSize: 50,
     currentTile: null,
-    action: null,
     gridWidth: 10,
     gridHeight: 10,
     zoom: 100,
@@ -38,10 +36,6 @@ class App extends Component {
 
   changeBackground = (e) => {
     this.setState({ background: e.target.value })
-  }
-
-  genGrid = (grid) => {
-    this.setState({ grid })
   }
 
   setCurrentTile = (tile) => {
@@ -127,14 +121,13 @@ class App extends Component {
           </header>
           <Grid 
             squareSize={this.state.squareSize} 
-            grid={this.state.grid} 
-            updateGrid={this.genGrid} 
-            setTile={this.setTile}
             gridWidth={this.state.gridWidth}
             gridHeight={this.state.gridHeight}
             zoom={this.state.zoom}
             background={this.state.background}
             status={this.state.action}
+            currentTile={this.state.currentTile}
+            action={this.state.action}
             />
         </div>
       </div>

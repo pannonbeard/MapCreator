@@ -4,8 +4,7 @@ import Grass from '../../assets/grass.png'
 import Water from '../../assets/water.jpg'
 class Grid extends Component {
   state = {
-    grid: [],
-    action: null
+    grid: []
   }
 
   componentDidMount() {
@@ -25,8 +24,6 @@ class Grid extends Component {
         return {...space, tile: {...space.tile} }
       })
     })
-    // const tile = grid[row][column].tile
-    // this.updateTileCount(tile.id, -1)
     grid[row][column] = { row, column, tile: null }
     this.setState({ grid })
   }
@@ -51,8 +48,7 @@ class Grid extends Component {
 
   setTile = (row, column) => {
     if(this.props.currentTile !== null){
-      let tile = { ...this.props.currentTile}
-      // this.updateTileCount(tile.id, 1)
+      let tile = { ...this.props.currentTile }
       const grid = this.state.grid.map( row => {
         return row.map( space => {
           return { ...space, tile: {...space.tile} }
@@ -61,9 +57,9 @@ class Grid extends Component {
       
       grid[row][column] = { row, column, tile }
       this.setState({ grid })
-    }else if (this.state.action === 'rotate'){
+    }else if (this.props.action === 'rotate'){
       this.rotateSpace(row, column)
-    }else if (this.state.action === 'clear' ){
+    }else if (this.props.action === 'clear' ){
       this.clearSpace(row, column)
     }else{
       console.log("nothing happened")
