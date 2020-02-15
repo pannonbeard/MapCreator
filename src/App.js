@@ -46,7 +46,7 @@ class App extends Component {
     let updatedTile = { ...this.state.tiles.find( tile => tile.id === tileId ) }
     updatedTile.count += change
     let tiles = this.state.tiles.map( tile => {
-      if(tile.id == updatedTile.id){
+      if(tile.id === updatedTile.id){
         return {...updatedTile}
       }
       return {...tile}

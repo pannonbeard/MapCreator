@@ -34,6 +34,9 @@ class Grid extends Component {
         return {...space, tile: {...space.tile} }
       })
     })
+    
+    if (!grid) return
+
     const space = { 
       ...grid[row][column], 
       tile: { ...grid[row][column].tile} 
