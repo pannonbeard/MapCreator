@@ -106,7 +106,7 @@ class App extends Component {
           action={this.state.action}
           />
         <Menu 
-          gridHeight={this.state.gridWidth}
+          gridHeight={this.state.gridHeight}
           gridWidth={this.state.gridWidth}
           tiles={this.state.tiles}
           setMapHeight={this.setMapHeight}
