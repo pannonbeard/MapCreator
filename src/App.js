@@ -71,11 +71,11 @@ class App extends Component {
   }
 
   saveMap = () => {
-    htmlToImage.toJpeg(document.querySelector('#grid'))
+    htmlToImage.toJpeg(document.querySelector('#grid'), { quality: 0.75 })
     .then(function (dataUrl) {
         const link = document.createElement('a')
         link.href = dataUrl
-        link.download = 'map.png'
+        link.download = 'map.jpg'
         document.body.appendChild(link)
         link.click()
         link.remove()
