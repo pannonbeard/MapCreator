@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import html2canvas from 'html2canvas';
+import htmlToImage from 'html-to-image';
 import './App.css';
 
 import wallPng from './assets/wall.png'
@@ -71,12 +71,10 @@ class App extends Component {
   }
 
   saveMap = () => {
-    html2canvas(document.querySelector('#grid'))
-      .then( canvas => {
-        const image = canvas.toDataURL('image/jpeg').replace("image/jpeg", "image/octet-stream");
-        console.log(image)
+    htmlToImage.toPng(document.querySelector('#grid'))
+    .then(function (dataUrl) {
         const link = document.createElement('a')
-        link.href = image
+        link.href = dataUrl
         link.download = 'map.png'
         document.body.appendChild(link)
         link.click()
