@@ -71,7 +71,7 @@ class App extends Component {
   }
 
   saveMap = () => {
-    htmlToImage.toPng(document.querySelector('#grid'))
+    htmlToImage.toJpeg(document.querySelector('#grid'))
     .then(function (dataUrl) {
         const link = document.createElement('a')
         link.href = dataUrl
