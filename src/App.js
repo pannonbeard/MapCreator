@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import htmlToImage from 'html-to-image';
+import { saveAs } from 'file-saver'
 import './App.css';
 
 import wallPng from './assets/wall.png'
@@ -71,15 +72,18 @@ class App extends Component {
   }
 
   saveMap = () => {
-    htmlToImage.toJpeg(document.querySelector('#grid'), { quality: 0.75 })
-    .then(function (dataUrl) {
-        const link = document.createElement('a')
-        link.href = dataUrl
-        link.download = 'map.jpg'
-        document.body.appendChild(link)
-        link.click()
-        link.remove()
-      })
+    htmlToImage.toBlob(document.querySelector('#grid'))
+    .then(function (blob) {
+      saveAs(blob, 'myMap.png');
+    });
+    // .then(function (dataUrl) {
+    //     const link = document.createElement('a')
+    //     link.href = dataUrl
+    //     link.download = 'map.jpg'
+    //     document.body.appendChild(link)
+    //     link.click()
+    //     link.remove()
+    //   })
   }
 
   setMapWidth = (width) => {
